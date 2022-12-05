@@ -21,7 +21,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-          cache: "npm"
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile # optional, --immutable
+      - run: yarn test
+          
+
       # install dependencies
       - run: npm ci
       # run ESLint & Prettier
