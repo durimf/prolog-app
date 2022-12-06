@@ -12,20 +12,28 @@ const menuItems = [
 
 const Nav = styled.nav`
   width: 280px;
-  height: 100vh;
+  height: calc(100vh - 2 * 32px);
+  padding: 32px 16px;
   background: #101828;
-  padding: 0px 16px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Logo = styled.img`
+  margin: 0px 12px 24px;
+  width: 118px;
 `;
 
 const List = styled.ul`
   list-style: none;
+  padding: 0px;
   padding: 0;
 `;
 
 export function SidebarNavigation() {
   return (
     <Nav>
-      <List>
+      <Logo src="/icons/logo-large.svg" />
         {menuItems.map((menuItem, index) => (
           <MenuItemLink key={index} {...menuItem} />
         ))}
