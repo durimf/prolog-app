@@ -23,7 +23,7 @@ const Icon = styled.img`
   margin-right: 12px;
 `;
 
-export function MenuItem({ href, text, iconSrc }: MenuItemProps) {
+export function MenuItemLink({ href, text, iconSrc }: MenuItemProps) {
   return (
     <ListItem>
       <Link href={href}>
