@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import styled from "styled-components";
+import { SidebarNavigation } from "../components/SidebarNavigation";
 
 type ContainerProps = {
   theme: boolean;
@@ -25,6 +26,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <SidebarNavigation />
         <h1 className={styles.title}>
           Welcome to <a href="/about">Prolog!</a>
         </h1>
