@@ -2,6 +2,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { SidebarNavigation } from "./SidebarNavigation";
+import { Routes } from "../../config/routes";
 
 export default {
   title: "UI/SidebarNavigation",
@@ -17,4 +18,6 @@ const Template: ComponentStory<typeof SidebarNavigation> = () => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.parameters = {
+  route: Routes.issues,
+};
