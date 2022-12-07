@@ -3,7 +3,8 @@ import { MenuItemLink } from "./MenuItemLink";
 import { MenuItemButton } from "./MenuItemButton";
 import { Routes } from "../../config/routes";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext } from "react";
+import { NavigationContext } from "../../contexts/Navigation";
 
 const menuItems = [
   { text: "Projects", iconSrc: "/icons/projects.svg", href: Routes.projects },
@@ -39,19 +40,21 @@ const LinkList = styled(List)`
 
 export function SidebarNavigation() {
   const router = useRouter();
-  const [isCollapsed, setCollapsed] = useState(false);
+  const { isSidebarCollapsed, toggleSidebar } = useContext(NavigationContext);
   console.log(router);
   return (
-    <Nav isCollapsed={isCollapsed}>
+    <Nav isCollapsed={isSidebarCollapsed}>
       <Logo
-        isCollapsed={isCollapsed}
-        src={isCollapsed ? "/icons/logo-small.svg" : "/icons/logo-large.svg"}
+        isCollapsed={isSidebarCollapsed}
+        src={
+          isSidebarCollapsed ? "/icons/logo-small.svg" : "/icons/logo-large.svg"
+        }
       />
 
       <LinkList>
         {menuItems.map((menuItem, index) => (
           <MenuItemLink
-            isCollapsed={isCollapsed}
+            isCollapsed={isSidebarCollapsed}
             key={index}
             {...menuItem}
             isActive={router.pathname === menuItem.href}
@@ -64,15 +67,15 @@ export function SidebarNavigation() {
           text="Support"
           iconSrc="/icons/support.svg"
           onClick={() => alert("Support")}
-          isCollapsed={isCollapsed}
+          isCollapsed={isSidebarCollapsed}
         />
         <MenuItemButton
           text="Collapse"
           iconSrc={
-            isCollapsed ? "/icons/uncollapse.svg" : "/icons/collapse.svg"
+            isSidebarCollapsed ? "/icons/uncollapse.svg" : "/icons/collapse.svg"
           }
-          onClick={() => setCollapsed(!isCollapsed)}
-          isCollapsed={isCollapsed}
+          onClick={() => toggleSidebar()}
+          isCollapsed={isSidebarCollapsed}
         />
       </List>
     </Nav>
