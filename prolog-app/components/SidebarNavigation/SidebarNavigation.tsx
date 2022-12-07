@@ -3,6 +3,7 @@ import { MenuItemLink } from "./MenuItemLink";
 import { MenuItemButton } from "./MenuItemButton";
 import { Routes } from "../../config/routes";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const menuItems = [
   { text: "Projects", iconSrc: "/icons/projects.svg", href: Routes.projects },
@@ -12,8 +13,8 @@ const menuItems = [
   { text: "Settings", iconSrc: "/icons/settings.svg", href: Routes.settings },
 ];
 
-const Nav = styled.nav`
-  width: 280px;
+const Nav = styled.nav<{ isCollapsed: boolean }>`
+  width: ${(props) => (props.isCollapsed ? "50px" : "248px")};
   height: calc(100vh - 2 * 32px);
   padding: 32px 16px;
   background: #101828;
@@ -21,9 +22,9 @@ const Nav = styled.nav`
   flex-direction: column;
 `;
 
-const Logo = styled.img`
+const Logo = styled.img<{ isCollapsed: boolean }>`
   margin: 0px 12px 24px;
-  width: 118px;
+  width: ${(props) => (props.isCollapsed ? "23px" : "118px")};
 `;
 
 const List = styled.ul`
@@ -38,14 +39,19 @@ const LinkList = styled(List)`
 
 export function SidebarNavigation() {
   const router = useRouter();
+  const [isCollapsed, setCollapsed] = useState(false);
   console.log(router);
   return (
-    <Nav>
-      <Logo src="/icons/logo-large.svg" />
+    <Nav isCollapsed={isCollapsed}>
+      <Logo
+        isCollapsed={isCollapsed}
+        src={isCollapsed ? "/icons/logo-small.svg" : "/icons/logo-large.svg"}
+      />
 
       <LinkList>
         {menuItems.map((menuItem, index) => (
           <MenuItemLink
+            isCollapsed={isCollapsed}
             key={index}
             {...menuItem}
             isActive={router.pathname === menuItem.href}
@@ -58,11 +64,15 @@ export function SidebarNavigation() {
           text="Support"
           iconSrc="/icons/support.svg"
           onClick={() => alert("Support")}
+          isCollapsed={isCollapsed}
         />
         <MenuItemButton
           text="Collapse"
-          iconSrc="/icons/collapse.svg"
-          onClick={() => alert("Collapse")}
+          iconSrc={
+            isCollapsed ? "/icons/uncollapse.svg" : "/icons/collapse.svg"
+          }
+          onClick={() => setCollapsed(!isCollapsed)}
+          isCollapsed={isCollapsed}
         />
       </List>
     </Nav>
