@@ -15,4 +15,10 @@ module.exports = {
     builder: "@storybook/builder-webpack5",
   },
   staticDirs: ["../public"],
+  webpackFinal: async (config) => {
+    config.resolve.alias["next/router"] = require.resolve(
+      "../__mocks__/next/router.tsx"
+    );
+    return config;
+  },
 };

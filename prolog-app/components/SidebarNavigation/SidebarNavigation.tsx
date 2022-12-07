@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { MenuItemLink } from "./MenuItemLink";
 import { MenuItemButton } from "./MenuItemButton";
+import { Routes } from "../../config/routes";
+import { useRouter } from "next/router";
 
 const menuItems = [
-  { text: "Projects", iconSrc: "/icons/projects.svg", href: "#" },
-  { text: "Issues", iconSrc: "/icons/issues.svg", href: "#" },
-  { text: "Alerts", iconSrc: "/icons/alerts.svg", href: "#" },
-  { text: "Users", iconSrc: "/icons/users.svg", href: "#" },
-  { text: "Settings", iconSrc: "/icons/settings.svg", href: "#" },
+  { text: "Projects", iconSrc: "/icons/projects.svg", href: Routes.projects },
+  { text: "Issues", iconSrc: "/icons/issues.svg", href: Routes.issues },
+  { text: "Alerts", iconSrc: "/icons/alerts.svg", href: Routes.alerts },
+  { text: "Users", iconSrc: "/icons/users.svg", href: Routes.users },
+  { text: "Settings", iconSrc: "/icons/settings.svg", href: Routes.settings },
 ];
 
 const Nav = styled.nav`
@@ -35,13 +37,19 @@ const LinkList = styled(List)`
 `;
 
 export function SidebarNavigation() {
+  const router = useRouter();
+  console.log(router);
   return (
     <Nav>
       <Logo src="/icons/logo-large.svg" />
 
       <LinkList>
         {menuItems.map((menuItem, index) => (
-          <MenuItemLink key={index} {...menuItem} />
+          <MenuItemLink
+            key={index}
+            {...menuItem}
+            isActive={router.pathname === menuItem.href}
+          />
         ))}
       </LinkList>
 
