@@ -1,3 +1,4 @@
+import { theme } from "@styles/theme";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -11,23 +12,24 @@ type MenuItemProps = {
 };
 
 const ListItem = styled.li<{ isActive: boolean }>`
-  height: 51px;
+  height: ${({ theme }) => theme.spacing[12]};
   display: flex;
   align-items: center;
-  margin-top: 4px;
-  padding: 0px 12px;
-  background: ${(props) => (props.isActive ? "#344054" : "transparent")};
-  border-radius: 6px;
+  margin-top: ${({ theme }) => theme.spacing[1]};
+  padding: 0px ${({ theme }) => theme.spacing[3]};
+  background: ${({ isActive, theme }) =>
+    isActive ? theme.colors.gray[700] : "transparent"};
+  border-radius: ${({ theme }) => theme.spacing[1]};
   a {
     display: flex;
     align-items: center;
-    color: #f2f4f7;
+    color: white;
     text-decoration: none;
   }
 `;
 
 const Icon = styled.img`
-  margin-right: 12px;
+  margin-right: ${(props) => props.theme.spacing[3]};
 `;
 
 export function MenuItemLink({

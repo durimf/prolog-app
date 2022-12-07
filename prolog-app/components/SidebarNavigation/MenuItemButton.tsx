@@ -9,7 +9,7 @@ type MenuItemProps = {
 };
 
 const ListItem = styled.li`
-  padding: 8px 12px;
+  padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[3]};
 `;
 
 const Button = styled.button`
@@ -33,7 +33,7 @@ const Button = styled.button`
 `;
 
 const Icon = styled.img`
-  margin-right: 12px;
+  margin-right: ${({ theme }) => theme.spacing[3]};
 `;
 
 export function MenuItemButton({

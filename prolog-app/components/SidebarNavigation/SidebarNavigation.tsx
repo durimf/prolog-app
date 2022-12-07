@@ -18,7 +18,7 @@ const Nav = styled.nav<{ isCollapsed: boolean }>`
   width: ${(props) => (props.isCollapsed ? "50px" : "248px")};
   height: calc(100vh - 2 * 32px);
   padding: 32px 16px;
-  background: #101828;
+  background: ${({ theme }) => theme.colors.gray[900]};
   display: flex;
   flex-direction: column;
 `;
