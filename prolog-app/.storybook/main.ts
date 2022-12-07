@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   stories: [
     "../components/**/*.stories.mdx",
@@ -19,6 +21,10 @@ module.exports = {
     config.resolve.alias["next/router"] = require.resolve(
       "../__mocks__/next/router.tsx"
     );
+    config.resolve.alias["@components"] = path.resolve("./components");
+    config.resolve.alias["@contexts"] = path.resolve("./contexts");
+    config.resolve.alias["@styles"] = path.resolve("./styles");
+    config.resolve.alias["@config"] = path.resolve("./config");
     return config;
   },
 };
