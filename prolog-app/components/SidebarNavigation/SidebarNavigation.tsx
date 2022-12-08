@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { MenuItemLink } from "./MenuItemLink";
 import { MenuItemButton } from "./MenuItemButton";
 import { Routes } from "../../config/routes";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavigationContext } from "@contexts/Navigation";
+import { Button as UnstyledButton } from "@components/Button";
 
 const menuItems = [
   { text: "Projects", iconSrc: "/icons/projects.svg", href: Routes.projects },
@@ -14,18 +15,68 @@ const menuItems = [
   { text: "Settings", iconSrc: "/icons/settings.svg", href: Routes.settings },
 ];
 
-const Nav = styled.nav<{ isCollapsed: boolean }>`
-  width: ${(props) => (props.isCollapsed ? "50px" : "248px")};
+const Container = styled.div<{ isCollapsed: boolean }>`
+  ${(props) =>
+    props.isCollapsed &&
+    css`
+      ${Header} {
+        width: 50px;
+      }
+
+      ${Nav} {
+        width: 50px;
+      }
+
+      ${Logo} {
+        width: 23px;
+      }
+    `}
+`;
+
+const Header = styled.header`
+  width: calc(100% - 2 * ${({ theme }) => theme.spacing[4]});
+  background: ${({ theme }) => theme.colors.gray[900]};
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 ${({ theme }) => theme.spacing[4]};
+  @media (min-width: 768px) {
+    width: 248px;
+    padding: ${({ theme }) =>
+      `${theme.spacing[8]} ${theme.spacing[4]} ${theme.spacing[6]}`};
+  }
+`;
+
+const Nav = styled.nav`
+  width: 248px;
   height: calc(100vh - 2 * 32px);
-  padding: 32px 16px;
+  padding: ${({ theme }) => `0 ${theme.spacing[4]} ${theme.spacing[8]}`};
   background: ${({ theme }) => theme.colors.gray[900]};
   display: flex;
   flex-direction: column;
+
+  transform: translateX(-100%);
 `;
 
-const Logo = styled.img<{ isCollapsed: boolean }>`
-  margin: 0px 12px 24px;
-  width: ${(props) => (props.isCollapsed ? "23px" : "118px")};
+const Logo = styled.img`
+  width: 118px;
+  @media (min-width: 768px) {
+    margin: ${({ theme }) => `0 ${theme.spacing[3]}`};
+  }
+`;
+
+const MenuButton = styled(UnstyledButton)`
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+const MenuIcon = styled.img`
+  display: block;
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const List = styled.ul`
@@ -41,43 +92,58 @@ const LinkList = styled(List)`
 export function SidebarNavigation() {
   const router = useRouter();
   const { isSidebarCollapsed, toggleSidebar } = useContext(NavigationContext);
-  console.log(router);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <Nav isCollapsed={isSidebarCollapsed}>
-      <Logo
-        isCollapsed={isSidebarCollapsed}
-        src={
-          isSidebarCollapsed ? "/icons/logo-small.svg" : "/icons/logo-large.svg"
-        }
-      />
-
-      <LinkList>
-        {menuItems.map((menuItem, index) => (
-          <MenuItemLink
-            isCollapsed={isSidebarCollapsed}
-            key={index}
-            {...menuItem}
-            isActive={router.pathname === menuItem.href}
-          />
-        ))}
-      </LinkList>
-
-      <List>
-        <MenuItemButton
-          text="Support"
-          iconSrc="/icons/support.svg"
-          onClick={() => alert("Support")}
-          isCollapsed={isSidebarCollapsed}
-        />
-        <MenuItemButton
-          text="Collapse"
-          iconSrc={
-            isSidebarCollapsed ? "/icons/uncollapse.svg" : "/icons/collapse.svg"
+    <Container isCollapsed={isSidebarCollapsed}>
+      <Header>
+        <Logo
+          src={
+            isSidebarCollapsed
+              ? "/icons/logo-small.svg"
+              : "/icons/logo-large.svg"
           }
-          onClick={() => toggleSidebar()}
-          isCollapsed={isSidebarCollapsed}
+          alt="logo"
         />
-      </List>
-    </Nav>
+        <MenuButton onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
+          <MenuIcon
+            src={isMobileMenuOpen ? "/icons/close.svg" : "/icons/hamburger.svg"}
+            alt="hamburger icon"
+          />
+        </MenuButton>
+      </Header>
+
+      <Nav>
+        <LinkList>
+          {menuItems.map((menuItem, index) => (
+            <MenuItemLink
+              isCollapsed={isSidebarCollapsed}
+              key={index}
+              {...menuItem}
+              isActive={router.pathname === menuItem.href}
+            />
+          ))}
+        </LinkList>
+
+        <List>
+          <MenuItemButton
+            text="Support"
+            iconSrc="/icons/support.svg"
+            onClick={() => alert("Support")}
+            isCollapsed={isSidebarCollapsed}
+          />
+          <MenuItemButton
+            text="Collapse"
+            iconSrc={
+              isSidebarCollapsed
+                ? "/icons/uncollapse.svg"
+                : "/icons/collapse.svg"
+            }
+            onClick={() => toggleSidebar()}
+            isCollapsed={isSidebarCollapsed}
+          />
+        </List>
+      </Nav>
+    </Container>
   );
 }
