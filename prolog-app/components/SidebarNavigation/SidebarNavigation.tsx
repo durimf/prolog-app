@@ -54,7 +54,7 @@ const Header = styled.header`
 `;
 
 const Nav = styled.nav<{ isMobileMenuOpen: boolean }>`
-  padding: ${({ theme }) => `0 ${theme.spacing[4]} ${theme.spacing[8]}`};
+  padding: ${({ theme }) => `0 ${theme.spacing[2]} ${theme.spacing[8]}`};
   background: ${({ theme }) => theme.colors.gray[900]};
   display: flex;
   flex-direction: column;
@@ -67,6 +67,7 @@ const Nav = styled.nav<{ isMobileMenuOpen: boolean }>`
   transition: transform 300ms;
   @media (min-width: 768px) {
     transform: none;
+    padding: ${({ theme }) => `0 ${theme.spacing[4]} ${theme.spacing[8]}`};
   }
 `;
 
