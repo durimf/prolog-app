@@ -46,6 +46,7 @@ const Header = styled.header`
   z-index: 1000;
   padding: 0 ${({ theme }) => theme.spacing[4]};
   @media (min-width: 768px) {
+    height: unset;
     width: 248px;
     padding: ${({ theme }) =>
       `${theme.spacing[8]} ${theme.spacing[4]} ${theme.spacing[6]}`};
@@ -57,16 +58,16 @@ const Nav = styled.nav<{ isMobileMenuOpen: boolean }>`
   background: ${({ theme }) => theme.colors.gray[900]};
   display: flex;
   flex-direction: column;
-  width: 248px;
   height: calc(100vh - ${HEADER_HEIGHT} - 32px);
+  width: 248px;
+  position: relative;
+  z-index: 1000;
   transform: ${({ isMobileMenuOpen }) =>
     isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)"};
   transition: transform 300ms;
   @media (min-width: 768px) {
-    transform: translateX(0);
+    transform: none;
   }
-  position: relative;
-  z-index: 1000;
 `;
 
 const Logo = styled.img`
@@ -103,6 +104,10 @@ const MenuOverlay = styled.div<{ isMobileMenuOpen: boolean }>`
   transition: opacity 300ms,
     transform 0s
       ${({ isMobileMenuOpen }) => (isMobileMenuOpen ? "0s" : "300ms")};
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const List = styled.ul`
