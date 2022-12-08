@@ -36,6 +36,7 @@
     "@storybook/manager-webpack5": "^6.5.14",
     "@storybook/react": "^6.5.14",
     "@storybook/testing-library": "^0.0.13",
+    "@testing-library/cypress": "^8.0.7",
     "babel-loader": "^8.3.0",
     "babel-plugin-styled-components": "^2.0.7",
     "eslint-config-prettier": "^8.5.0",
