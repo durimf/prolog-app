@@ -15,10 +15,10 @@ interface Colors {
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    colors: {
+    color: {
       gray: Colors;
     };
-    spacing: {
+    space: {
       1: string;
       2: string;
       3: string;
